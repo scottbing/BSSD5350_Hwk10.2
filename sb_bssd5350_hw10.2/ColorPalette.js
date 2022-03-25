@@ -1,6 +1,7 @@
 class ColorPalette {
   //private variables for modes
   //would be better as enumerator
+  
   #COMPLEMENT = 0;
   #ANALOGUE = 1;
   #MONOCHROME =2;
@@ -8,9 +9,9 @@ class ColorPalette {
   #TRIADIC = 4;
   
   #monochromes = []
-  #analogue = []
+  #analogues = []
   #spitcomplements = []
-  #complement = []
+  #complements = []
   #triads = []
   
   #mode = null //private variable
@@ -24,36 +25,53 @@ class ColorPalette {
     this.baseColor = color(inputColor, 100, 100, 100);
    }
 
-   get col1() {
-     return this._col1;
-     }
-   get col2() {
-     return this._col2;
+   get monochromes1() {
+     return this.#monochromes[0];
    }
 
-   findComplement() {
+   get monochromes2() {
+     return this.#monochromes[1];
+   }
+
+   get analogues1() {
+     return this.#analogues[0];
+   }
+
+   get analogues2() {
+     return this.#analogues[1];
+   }
+   
+   get complements1() {
+      return this.#complements[0];
+   }
+   
+   get complements2() {
+      return this.#complements[1];
+   }
+
+   findComplements() {
     this.#mode = this.#COMPLEMENT; 
-    this._col1 = color(round(hue(this.baseColor) + 180) % 360, 100, 100); 
-    this._col2 = this._col1; //only one complement
+    this.#complements[0] = color(round(hue(this.baseColor) + 180) % 360, 100, 100); 
+    this.#complements[1] = this._col1; //only one complements
    }
 
    findMonochromes() {
     this.#mode = this.#MONOCHROME; 
-    this._col1 = color(hue(this.baseColor), 100, 50); 
-    this._col2 = color(hue(this.baseColor), 50, 100);
+    this.#monochromes[0] = color(hue(this.baseColor), 100, 50); 
+    this.#monochromes[1] = color(hue(this.baseColor), 50, 100);
    }
 
    findAnalogues() {
    this.#mode = this.#ANALOGUE;
-   this._col1 = color((hue(this.baseColor) + 50) % 360, 100, 100);
+   this.#analogues[0] = color((hue(this.baseColor) + 50) % 360, 100, 100);
    let hcolor = round(hue(this.baseColor) - 50);
    if(hcolor < 0){
     hcolor = round(360+hcolor);
    }
-   this._col2 = color(hcolor % 360, 100, 100);
-  }
+   this.#analogues[1] = color(hcolor % 360, 100, 100);
+   }
 
-   findSplitComplement() {
+   findSplitComplements() {
      this.#mode = this.#SPLITCOMPLEMENT;
      let compl = round(hue(this.baseColor) + 180) % 360; 
      this._col1 = color((compl + 30) % 360, 100, 100); 
@@ -73,4 +91,33 @@ class ColorPalette {
    }  
    this._col2 = color(hcolor % 360, 100, 100);
    }
+
+   //not getters. getters cannot accept parameters
+  getRandomHue() {
+     return color(round(random(360), 100, 100));
+  }
+
+  //get from any color but if none given assumes current palette
+  getRandomTint(inputColor = undefined) {
+     if (inputColor == undefined) {
+      inputColor = this.baseColor;
+     }
+     return color(
+      hue(inputColor),
+      round(random(10, 100)),
+      brightness(inputColor)
+     );
+  }
+
+  //get from any color but if none given assumes current palette
+  getRandomShade(inputColor = undefined) {
+     if (inputColor == undefined) {
+      inputColor = this.baseColor;
+     }
+     return color(
+        hue(inputColor),
+        saturation(inputColor),
+        round(random(10, 100))
+        );
+  }
 }

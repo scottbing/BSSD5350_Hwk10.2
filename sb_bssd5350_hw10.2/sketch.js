@@ -18,26 +18,30 @@ function setup() {
 function draw() {
   cp = new ColorPalette(); //make palette
   swatchColor(cp); //call to custom helper function below 
-  //hf.save("img", "["+String.valueOf(randomC.getBaseColor())+"]");
+  //]/hf.save("img", "["+String.valueOf(randomC.getBaseColor())+"]");
   //exit();
 }
 
-function swatchColor(cp) {
+function swatchColor(cp) {  
   //fill(cp.getBaseColor());
   rect(0, 0, width, height/3);
   cp.findAnalogues();
-  fill(cp.col1);
+  fill(cp.analogues1);
   rect(0, height*1/3, width/4, height/3); 
-  cp.findSplitComplement();
-  fill(cp.col1);
+  cp.findAnalogues();
+  fill(cp.analogues2);
   rect(0, height*2/3, width/4, height/3);
-  cp.findComplement();
-  fill(cp.col1);
+  cp.findComplements();
+  fill(cp.complements1);
   rect(width/4, height/3, width/2, height*2/3);
   cp.findMonochromes();
-  fill(cp.col1);
+  fill(cp.monochromes1)
   rect(width*3/4, height*1/3, width/4, height/3);
-  cp.findTriads()
-  fill(cp.col1);
+  cp.findMonochromes();
+  fill(cp.monochromes2)
   rect(width*3/4, height*2/3, width/4, height/3);
 }
+
+function keyPressed() {
+   if (key == "s" || key == "S") saveCanvas(gd.timestamp(), "png");
+  }
