@@ -10,20 +10,20 @@ function setup() {
  rectMode(CENTER);
  noStroke();
  cp = new ColorPalette(); //make palette
- //cp.findAnalogues(); 
+ //cp.findAnalogues() 
  //cp.findComplement(); 
  cp.findMonochromes();
- console.log(cp.coll); //look in the console to see the extra stuff here
+ //cp.findSplit omplement(); 
+ console.log(cp.col1); //look in the console to see the extra stuff here
 }
 
 function draw() { //whole new draw
  background(cp.baseColor);
- fill(cp.coll);
+ fill(cp.col1);
  rect(width / 2, height / 2, 500,500);
  fill(cp.col2);
  rect(360, 360, 100,100);
 }
-
 
 function keyPressed() {
  if (key == "s" || key == "S") saveCanvas(gd.timestamp(), "png");
